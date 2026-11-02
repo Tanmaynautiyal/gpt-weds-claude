@@ -1,4 +1,4 @@
+.vercel
+.netlify
 *.zip
 __pycache__/
-.vercel/
-.DS_Store

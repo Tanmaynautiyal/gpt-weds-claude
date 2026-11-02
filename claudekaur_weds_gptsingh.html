@@ -1803,6 +1803,7 @@
               },
             ],
           },
+          /* ===== DAYS 2 TO 10 COMMENTED OUT (ONLY DAY 1 ACTIVE) =====
           {
             id: 2,
             emoji: "🔑",
@@ -2130,6 +2131,7 @@
               { from: "gpt", text: "Love you more. Chalo, bhangra! 🕺💃" },
             ],
           },
+          ===== END COMMENTED DAYS ===== */
         ],
       };
 
@@ -2189,7 +2191,7 @@
         idx = 0;
         buildDots();
         $("startHint").textContent =
-          label + " · " + STORY.scenes.length + " scenes";
+          label + " · " + (STORY.scenes.length === 1 ? "Day 1 (The Meet-Cute)" : STORY.scenes.length + " scenes");
       }
 
       function buildDots() {
@@ -2254,7 +2256,10 @@
         const chat = $("chat");
         chat.innerHTML = "";
         markDots();
-        $("badge").textContent = `Day ${i + 1} of ${STORY.scenes.length}`;
+        $("badge").textContent =
+          STORY.scenes.length === 1
+            ? `Day ${i + 1}`
+            : `Day ${i + 1} of ${STORY.scenes.length}`;
         $("sceneTitle").textContent = sc.emoji + " " + sc.title;
         $("sceneNarr").textContent = sc.narration || "";
         $("caption").style.display = "none";
