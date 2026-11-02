@@ -1,0 +1,5 @@
+*.zip
+__pycache__/
+generate_cinematic_videos.py
+*.py
+

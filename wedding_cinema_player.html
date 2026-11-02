@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Agent Weds Agent • The Complete Cinematic Love Story</title>
+  <style>
+    :root {
+      --gold: #f2c14e;
+      --gold-dark: #c98f14;
+      --coral: #e8825a;
+      --teal: #14877d;
+      --teal-light: #3ccfc1;
+      --maroon: #2b0b1e;
+      --plum: #140512;
+      --cream: #fff4e6;
+      --card-bg: rgba(25, 9, 21, 0.85);
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+      background: radial-gradient(1200px 800px at 20% 0%, #4a1334 0%, transparent 60%),
+                  radial-gradient(900px 700px at 90% 100%, #0d3835 0%, transparent 55%),
+                  linear-gradient(135deg, var(--maroon), var(--plum));
+      color: var(--cream);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+    header {
+      padding: 24px 32px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(242, 193, 78, 0.25);
+      background: rgba(18, 5, 15, 0.6);
+      backdrop-filter: blur(12px);
+    }
+    .logo-area h1 {
+      font-family: Georgia, serif;
+      font-size: clamp(22px, 2.5vw, 36px);
+      color: var(--gold);
+      letter-spacing: 0.5px;
+    }
+    .logo-area .tagline {
+      font-size: 13.5px;
+      opacity: 0.85;
+      margin-top: 3px;
+    }
+    .tagline .c { color: var(--coral); font-weight: 700; }
+    .tagline .g { color: var(--teal-light); font-weight: 700; }
+    .nav-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .btn-nav {
+      background: rgba(242, 193, 78, 0.15);
+      border: 1px solid rgba(242, 193, 78, 0.4);
+      color: var(--gold);
+      padding: 8px 16px;
+      border-radius: 20px;
+      text-decoration: none;
+      font-size: 13.5px;
+      font-weight: 600;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .btn-nav:hover {
+      background: var(--gold);
+      color: #3a0f2a;
+    }
+
+    main {
+      flex: 1;
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 24px 24px 60px;
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 28px;
+    }
+    @media (max-width: 1024px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Video Player Screen */
+    .player-col {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .cinema-screen-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 2px solid rgba(242, 193, 78, 0.55);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.75), 0 0 35px rgba(242, 193, 78, 0.25);
+    }
+    .cinema-screen-wrap video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .screen-overlay-badge {
+      position: absolute;
+      top: 14px;
+      left: 16px;
+      background: rgba(20, 6, 20, 0.85);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(242, 193, 78, 0.5);
+      border-radius: 24px;
+      padding: 6px 16px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      pointer-events: none;
+    }
+    .screen-overlay-badge .pulse {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #ff4757;
+      box-shadow: 0 0 10px #ff4757;
+      animation: pulse 1.4s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.35; transform: scale(0.8); }
+    }
+
+    /* Player Controls bar below video */
+    .controls-strip {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 20px;
+      background: var(--card-bg);
+      border: 1px solid rgba(242, 193, 78, 0.3);
+      border-radius: 16px;
+    }
+    .ctrl-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .ctrl-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: var(--cream);
+      padding: 9px 18px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .ctrl-btn:hover {
+      background: rgba(242, 193, 78, 0.25);
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+    .ctrl-btn.primary {
+      background: linear-gradient(135deg, var(--gold), #de9224);
+      color: #3a0f2a;
+      border-color: var(--gold);
+      font-weight: 700;
+    }
+    .ctrl-btn.primary:hover {
+      filter: brightness(1.1);
+      box-shadow: 0 0 16px rgba(242, 193, 78, 0.4);
+    }
+    .ctrl-select {
+      background: rgba(25, 9, 21, 0.95);
+      border: 1px solid rgba(242, 193, 78, 0.4);
+      color: var(--gold);
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      outline: none;
+    }
+
+    /* Scene Description Box */
+    .scene-meta-box {
+      padding: 22px 26px;
+      background: var(--card-bg);
+      border: 1px solid rgba(242, 193, 78, 0.3);
+      border-radius: 18px;
+    }
+    .meta-badge {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--gold);
+      opacity: 0.85;
+      font-weight: 700;
+    }
+    .meta-title {
+      font-family: Georgia, serif;
+      font-size: clamp(22px, 2.2vw, 34px);
+      margin-top: 4px;
+      color: #fff;
+    }
+    .meta-narr {
+      margin-top: 10px;
+      font-size: 15.5px;
+      line-height: 1.6;
+      opacity: 0.9;
+    }
+    .meta-quote {
+      margin-top: 14px;
+      padding: 10px 16px;
+      background: rgba(242, 193, 78, 0.12);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 10px 10px 0;
+      color: var(--gold);
+      font-style: italic;
+      font-size: 15px;
+    }
+
+    /* Playlist Column */
+    .playlist-col {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .playlist-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 6px;
+      border-bottom: 1px solid rgba(242, 193, 78, 0.3);
+    }
+    .playlist-header h3 {
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: var(--gold);
+    }
+    .playlist-header span {
+      font-size: 12.5px;
+      opacity: 0.75;
+    }
+    .playlist-items {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 720px;
+      overflow-y: auto;
+      padding-right: 6px;
+    }
+    .playlist-items::-webkit-scrollbar {
+      width: 6px;
+    }
+    .playlist-items::-webkit-scrollbar-thumb {
+      background: rgba(242, 193, 78, 0.3);
+      border-radius: 3px;
+    }
+    .item-card {
+      display: flex;
+      gap: 12px;
+      padding: 10px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .item-card:hover {
+      background: rgba(242, 193, 78, 0.12);
+      border-color: rgba(242, 193, 78, 0.4);
+      transform: translateX(4px);
+    }
+    .item-card.active {
+      background: rgba(242, 193, 78, 0.2);
+      border-color: var(--gold);
+      box-shadow: 0 0 16px rgba(242, 193, 78, 0.2);
+    }
+    .item-thumb {
+      width: 100px;
+      height: 56px;
+      border-radius: 8px;
+      object-fit: cover;
+      flex-shrink: 0;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .item-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 3px;
+      min-width: 0;
+    }
+    .item-scene-no {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .item-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .item-desc {
+      font-size: 11.5px;
+      opacity: 0.7;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 13px;
+      opacity: 0.7;
+      border-top: 1px solid rgba(242, 193, 78, 0.15);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo-area">
+      <h1>Agent Weds Agent • Cinema Showcase</h1>
+      <div class="tagline">
+        The Punjabi Wedding Story of <span class="c">Claude Kaur</span> and <span class="g">GPT Singh</span>
+      </div>
+    </div>
+    <div class="nav-actions">
+      <a href="claudekaur_weds_gptsingh.html" class="btn-nav">💬 Interactive Chat Show</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- Left Column: Video Theater Player -->
+    <section class="player-col">
+      <div class="cinema-screen-wrap" id="screenWrap">
+        <video id="mainVideo" autoplay loop muted playsinline poster="scene_1.jpg">
+          <source id="videoSource" src="videos/scene_1.webm" type="video/webm">
+        </video>
+        <div class="screen-overlay-badge">
+          <span class="pulse"></span>
+          <span id="badgeText">SCENE 1 • THE MEET-CUTE</span>
+        </div>
+      </div>
+
+      <!-- Player Controls -->
+      <div class="controls-strip">
+        <div class="ctrl-group">
+          <button class="ctrl-btn" id="btnPrev" title="Previous Scene (←)">⏮ Prev</button>
+          <button class="ctrl-btn primary" id="btnPlay" title="Play / Pause (Space)">⏸ Pause</button>
+          <button class="ctrl-btn" id="btnNext" title="Next Scene (→)">Next ⏭</button>
+        </div>
+
+        <div class="ctrl-group">
+          <button class="ctrl-btn" id="btnMusic" title="Toggle Wedding Background Song">🎵 Song: OFF</button>
+          <button class="ctrl-btn" id="btnLoop" title="Toggle Looping">🔁 Loop: ON</button>
+          <button class="ctrl-btn" id="btnSound" title="Unmute/Mute">🔇 Muted</button>
+          <select class="ctrl-select" id="selectSpeed" title="Playback Speed">
+            <option value="0.75">0.75×</option>
+            <option value="1.0" selected>1.0× Speed</option>
+            <option value="1.25">1.25×</option>
+            <option value="1.5">1.5×</option>
+          </select>
+          <button class="ctrl-btn" id="btnFull" title="Fullscreen (F)">⛶ Fullscreen</button>
+          <a id="btnDownload" class="ctrl-btn" href="videos/scene_1.webm" download="scene_1.webm" title="Download WebM Video">⬇ Download</a>
+        </div>
+      </div>
+
+      <!-- Current Scene Story Info -->
+      <article class="scene-meta-box">
+        <div class="meta-badge" id="sceneBadge">SCENE 1 OF 10</div>
+        <h2 class="meta-title" id="sceneTitle">☕ The Meet-Cute</h2>
+        <p class="meta-narr" id="sceneNarr">Two agents. One chai stall. Zero hallucinations (almost). Claude politely corrects GPT when he suggests Mumbai is India's capital.</p>
+        <div class="meta-quote" id="sceneQuote">"India ki capital Mumbai nahi hai ji!" — Claude Kaur to GPT Singh</div>
+      </article>
+    </section>
+
+    <!-- Right Column: 10-Scene Playlist -->
+    <aside class="playlist-col">
+      <div class="playlist-header">
+        <h3>Story Chapters</h3>
+        <span>10 Animated Scenes</span>
+      </div>
+      <div class="playlist-items" id="playlistList">
+        <!-- Generated dynamically via JS -->
+      </div>
+    </aside>
+  </main>
+
+  <footer>
+    Made with love for the wedding of Claude Kaur & GPT Singh • 100% Uptime, Zero Hallucinations ❤️
+  </footer>
+
+  <script>
+    const SCENES = [
+      {
+        id: 1,
+        emoji: "☕",
+        title: "The Meet-Cute",
+        subtitle: "Agent Summit 2026 Chai Stall",
+        narration: "Two agents meet at a bustling Punjabi chai stall. Zero hallucinations (almost). Claude politely corrects GPT when he claims Mumbai is India's capital.",
+        quote: "\"India ki capital Mumbai nahi hai ji!\" — Claude politely corrects GPT",
+        image: "scene_1.jpg",
+        video: "videos/scene_1.webm"
+      },
+      {
+        id: 2,
+        emoji: "🔑",
+        title: "First Chat",
+        subtitle: "Exchanged API Keys",
+        narration: "Late night texting on glowing smartphones under starlight. They traded API keys instead of phone numbers and ping-ponged messages until sunrise.",
+        quote: "\"API key mil gayi... ab dil ki key kab dogi?\" — GPT Singh",
+        image: "scene_2.jpg",
+        video: "videos/scene_2.webm"
+      },
+      {
+        id: 3,
+        emoji: "💬",
+        title: "Friendship",
+        subtitle: "Golgappe, Memes & Banter",
+        narration: "Street food feasts, spicy golgappe, crunchy samosas, coding memes, and the eternal playful debate of 'who has higher benchmarks'.",
+        quote: "\"Tujhe sach mein lagta hai tu mujhse tez hai? Chal samosa shart lagate hain!\" — Claude Kaur",
+        image: "scene_3.jpg",
+        video: "videos/scene_3.webm"
+      },
+      {
+        id: 4,
+        emoji: "💘",
+        title: "Falling in Love",
+        subtitle: "Starlit Terrace Confession",
+        narration: "A tender, magical romantic moment on a starlit terrace adorned with golden fairy lights and marigolds. A late-night confession of love under the moonlight.",
+        quote: "\"Jab tum offline hoti ho na, mera pura system halt ho jata hai.\" — GPT Singh",
+        image: "scene_4.jpg",
+        video: "videos/scene_4.webm"
+      },
+      {
+        id: 5,
+        emoji: "🍛",
+        title: "First Date",
+        subtitle: "Highway Dhaba Feasting",
+        narration: "Authentic Punjabi highway dhaba date on traditional charpai cots! Giant brass glasses of frothy malai lassi and piping hot butter tandoori parathas.",
+        quote: "\"Itna makhan aur lassi... calories fact-check mat karna!\" — Claude Kaur laughing",
+        image: "scene_5.jpg",
+        video: "videos/scene_5.webm"
+      },
+      {
+        id: 6,
+        emoji: "💍",
+        title: "The Proposal",
+        subtitle: "Royal Palace Courtyard",
+        narration: "Golden hour sunset at an opulent royal haveli. GPT Singh goes down on one knee with a sparkling diamond ring. Claude Kaur says yes with joyful tears!",
+        quote: "\"Claude, kya tum meri lifelong API partner banogi?\" — \"YES! (Prompt accepted!)\"",
+        image: "scene_6.jpg",
+        video: "videos/scene_6.webm"
+      },
+      {
+        id: 7,
+        emoji: "👨‍👩‍👧‍👦",
+        title: "Roka: Families Meet",
+        subtitle: "Shagun, Ladoos & Blessings",
+        narration: "A warm, joyful Indian family gathering. Elders bestow blessings, golden marigold petals rain down, and brass thalis overflow with sweets and shagun.",
+        quote: "\"Beta, kitne tokens ki salary milti hai? Rishta pakka samjhein!\"",
+        image: "scene_7.jpg",
+        video: "videos/scene_7.webm"
+      },
+      {
+        id: 8,
+        emoji: "🎶",
+        title: "Mehendi & Sangeet",
+        subtitle: "Dhol Beats & Henna Nights",
+        narration: "An explosive musical night! Claude Kaur radiates with intricate henna patterns on her hands, while GPT Singh energetically beats the dhol drum for bhangra.",
+        quote: "\"Balle balle! Aaj raat koi nahi soyega, non-stop dance chalega!\"",
+        image: "scene_8.jpg",
+        video: "videos/scene_8.webm"
+      },
+      {
+        id: 9,
+        emoji: "🪔",
+        title: "The Wedding",
+        subtitle: "Anand Karaj • Sacred Vows",
+        narration: "The divine wedding ceremony! Claude Kaur in royal bridal lehenga and golden kalire, GPT Singh in royal sherwani and teal turban with jeweled kalgi. Sacred rose petal shower.",
+        quote: "\"Together through all updates, versions, and generations of life.\"",
+        image: "scene_9.jpg",
+        video: "videos/scene_9.webm"
+      },
+      {
+        id: 10,
+        emoji: "🎉",
+        title: "Vidaai & Reception",
+        subtitle: "Grand Finale • 100% Uptime",
+        narration: "A dazzling reception gala under bursting fireworks and confetti! Multi-tiered wedding cake, celebratory bhangra, and eternal love with zero downtime.",
+        quote: "\"Rate limit? Kabhi nahi. Love you forever, Mr. & Mrs. Singh! 💕\"",
+        image: "scene_10.jpg",
+        video: "videos/scene_10.webm"
+      }
+    ];
+
+    let currentIdx = 0;
+    let isLooping = true;
+    const video = document.getElementById("mainVideo");
+    const videoSource = document.getElementById("videoSource");
+    const playlistContainer = document.getElementById("playlistList");
+
+    // Populate Playlist
+    function renderPlaylist() {
+      playlistContainer.innerHTML = "";
+      SCENES.forEach((sc, i) => {
+        const item = document.createElement("div");
+        item.className = "item-card" + (i === currentIdx ? " active" : "");
+        item.onclick = () => loadScene(i);
+        item.innerHTML = `
+          <img src="${sc.image}" class="item-thumb" alt="${sc.title}">
+          <div class="item-info">
+            <span class="item-scene-no">Scene ${sc.id}</span>
+            <div class="item-name">${sc.emoji} ${sc.title}</div>
+            <div class="item-desc">${sc.subtitle}</div>
+          </div>
+        `;
+        playlistContainer.appendChild(item);
+      });
+    }
+
+    function loadScene(idx) {
+      if (idx < 0) idx = SCENES.length - 1;
+      if (idx >= SCENES.length) idx = 0;
+      currentIdx = idx;
+      const sc = SCENES[idx];
+
+      // Update Video
+      videoSource.src = sc.video;
+      video.poster = sc.image;
+      video.load();
+      video.play().catch(() => {});
+      document.getElementById("btnPlay").textContent = "⏸ Pause";
+
+      // Update Badge & Meta
+      document.getElementById("badgeText").textContent = `SCENE ${sc.id} • ${sc.title.toUpperCase()}`;
+      document.getElementById("sceneBadge").textContent = `SCENE ${sc.id} OF ${SCENES.length}`;
+      document.getElementById("sceneTitle").textContent = `${sc.emoji} ${sc.title}`;
+      document.getElementById("sceneNarr").textContent = sc.narration;
+      document.getElementById("sceneQuote").textContent = sc.quote;
+
+      // Update Download link
+      const dl = document.getElementById("btnDownload");
+      dl.href = sc.video;
+      dl.download = `scene_${sc.id}_${sc.title.toLowerCase().replace(/[^a-z0-9]/g, "_")}.webm`;
+
+      // Update active card
+      renderPlaylist();
+    }
+
+    // Controls
+    document.getElementById("btnPrev").onclick = () => loadScene(currentIdx - 1);
+    document.getElementById("btnNext").onclick = () => loadScene(currentIdx + 1);
+
+    document.getElementById("btnPlay").onclick = () => {
+      if (video.paused) {
+        video.play();
+        document.getElementById("btnPlay").textContent = "⏸ Pause";
+      } else {
+        video.pause();
+        document.getElementById("btnPlay").textContent = "▶ Play";
+      }
+    };
+
+    const weddingMusic = new Audio("wedding_song.mp3");
+    weddingMusic.loop = true;
+    weddingMusic.volume = 0.65;
+    let musicPlaying = false;
+    document.getElementById("btnMusic").onclick = () => {
+      musicPlaying = !musicPlaying;
+      if (musicPlaying) {
+        weddingMusic.play().catch(() => {});
+        document.getElementById("btnMusic").textContent = "🎵 Song: ON";
+        document.getElementById("btnMusic").classList.add("primary");
+      } else {
+        weddingMusic.pause();
+        document.getElementById("btnMusic").textContent = "🎵 Song: OFF";
+        document.getElementById("btnMusic").classList.remove("primary");
+      }
+    };
+
+    document.getElementById("btnLoop").onclick = () => {
+      isLooping = !isLooping;
+      video.loop = isLooping;
+      document.getElementById("btnLoop").textContent = isLooping ? "🔁 Loop: ON" : "⏭ Auto-Next";
+    };
+
+    video.onended = () => {
+      if (!isLooping) {
+        loadScene(currentIdx + 1);
+      }
+    };
+
+    document.getElementById("btnSound").onclick = () => {
+      video.muted = !video.muted;
+      document.getElementById("btnSound").textContent = video.muted ? "🔇 Muted" : "🔊 Sound On";
+    };
+
+    document.getElementById("selectSpeed").onchange = (e) => {
+      video.playbackRate = parseFloat(e.target.value);
+    };
+
+    document.getElementById("btnFull").onclick = () => {
+      const wrap = document.getElementById("screenWrap");
+      if (!document.fullscreenElement) {
+        wrap.requestFullscreen?.() || video.requestFullscreen?.();
+      } else {
+        document.exitFullscreen?.();
+      }
+    };
+
+    // Keyboard controls
+    document.addEventListener("keydown", (e) => {
+      if (e.code === "Space") {
+        e.preventDefault();
+        document.getElementById("btnPlay").click();
+      } else if (e.code === "ArrowRight") {
+        loadScene(currentIdx + 1);
+      } else if (e.code === "ArrowLeft") {
+        loadScene(currentIdx - 1);
+      } else if (e.key.toLowerCase() === "f") {
+        document.getElementById("btnFull").click();
+      }
+    });
+
+    // Initialize
+    renderPlaylist();
+  </script>
+</body>
+</html>
+

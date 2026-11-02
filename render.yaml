@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: claudekaur-weds-gptsingh
+    runtime: static
+    buildCommand: ""
+    staticPublishPath: .
+    routes:
+      - type: rewrite
+        source: /
+        destination: /index.html
+    headers:
+      - path: /*
+        name: Access-Control-Allow-Origin
+        value: "*"
+      - path: /videos/*
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
+      - path: /*.jpg
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
+      - path: /*.mp3
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
